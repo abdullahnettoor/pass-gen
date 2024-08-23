@@ -1,4 +1,4 @@
-package reqeustmodel
+package req
 
 type User struct {
 	UserName        string

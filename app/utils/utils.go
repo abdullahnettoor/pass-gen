@@ -1,19 +1,31 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
 	"time"
 
+	"github.com/abdullahnettoor/pass-gen/app/config"
+	e "github.com/abdullahnettoor/pass-gen/app/models/errors"
+	"github.com/abdullahnettoor/pass-gen/app/models/req"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var cfg config.Config
+
+func LoadConfig(config *config.Config) {
+	cfg = *config
+}
 
 func CreateToken(userID, secretKey string) (string, error) {
 	secretKeyByte := []byte(secretKey)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"userID": userID,
-			"exp":    time.Now().Add(time.Hour * 10).Unix(),
+			"exp":    time.Now().Add(time.Hour * 240).Unix(),
 		})
 
 	tokenString, err := token.SignedString(secretKeyByte)
@@ -36,7 +48,7 @@ func VerifyToken(tokenString, secretKey string) (string, error) {
 	}
 
 	if !token.Valid {
-		return "", fmt.Errorf("invalid token")
+		return "", e.ErrInvalidToken
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
@@ -49,6 +61,34 @@ func VerifyToken(tokenString, secretKey string) (string, error) {
 		return "", fmt.Errorf("token claims is not matching")
 	}
 
+	return userID, nil
+}
+
+func ValidateToken() (string, error) {
+	var token req.Token
+
+	// get user home dir
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return "", err
+	}
+
+	// read data from config
+	filePath := filepath.Join(homeDir, cfg.ConfigFilePath)
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		fmt.Println("--- file-path", filePath)
+		fmt.Println("--- ERROR:", err.Error())
+		return "", err
+	}
+
+	//verify token
+	json.Unmarshal(data, &token)
+
+	userID, err := VerifyToken(token.Token, cfg.JwtSecret)
+	if err != nil {
+		return "", err
+	}
 	return userID, nil
 }
 
