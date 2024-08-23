@@ -1,5 +1,5 @@
 /*
-Copyright © 2024 Abdullah Nettoor abdullahnettoor@gmail.com
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 */
 package cmd
 
@@ -17,11 +17,11 @@ import (
 	"golang.org/x/term"
 )
 
-// signupCmd represents the signup command
-var signupCmd = &cobra.Command{
-	Use:   "signup",
-	Short: "Register a new user account",
-	Long:  `Create a new user account by providing the necessary credentials.`,
+// loginCmd represents the login command
+var loginCmd = &cobra.Command{
+	Use:   "login",
+	Short: "User login",
+	Long:  `Log in to an existing user account by providing your username and password.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			user = req.User{}
@@ -51,26 +51,15 @@ var signupCmd = &cobra.Command{
 			log.Fatal("password is less than five digit kidly strong your the password")
 		}
 
-		//read confirm password
-		fmt.Printf("Re-enter your password :")
-		password, err = term.ReadPassword(syscall.Stdin)
+		err = usecase.Login(&user)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("")
-
-		if user.ConfirmPassword = strings.TrimSpace(string(password)); len(user.ConfirmPassword) == 0 {
-			log.Fatal("confirm password is emtpy kindly enter the password")
-		}
-
-		result, err := usecase.Signup(&user)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("signup succesfully with user id ", result)
+		fmt.Printf("login successfully %s \n", user.UserName)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(signupCmd)
+	rootCmd.AddCommand(loginCmd)
+
 }
