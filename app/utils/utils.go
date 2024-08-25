@@ -28,6 +28,7 @@ func CreateToken(userID, secretKey string) (string, error) {
 			"exp":    time.Now().Add(time.Hour * 240).Unix(),
 		})
 
+	fmt.Println("User ID", userID)
 	tokenString, err := token.SignedString(secretKeyByte)
 	if err != nil {
 		return "", err
@@ -55,6 +56,7 @@ func VerifyToken(tokenString, secretKey string) (string, error) {
 	if !ok {
 		return "", err
 	}
+	fmt.Println("Calims", claims)
 
 	userID, ok := claims["userID"].(string)
 	if !ok {
@@ -74,7 +76,7 @@ func ValidateToken() (string, error) {
 	}
 
 	// read data from config
-	filePath := filepath.Join(homeDir, cfg.ConfigFilePath)
+	filePath := filepath.Join(homeDir, cfg.ConfigPath, cfg.ConfigFilePath)
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Println("--- file-path", filePath)

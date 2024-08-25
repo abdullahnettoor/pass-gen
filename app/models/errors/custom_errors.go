@@ -6,6 +6,7 @@ var (
 	ErrNotFound              = errors.New("not found")
 	ErrUserNotFound          = errors.New("user not found")
 	ErrUserConflict          = errors.New("user already exist")
+	ErrSecretKeyRepeat       = errors.New("secret key already exist")
 	ErrIsEmpty               = errors.New("is empty")
 	ErrDb                    = errors.New("db error")
 	ErrInvalidToken          = errors.New("invalid token")

@@ -1,12 +1,22 @@
 package res
 
 type User struct {
-	UserID   string
+	ID       string
 	UserName string
 }
 
 type LoginResponse struct {
-	UserID   string
+	ID       string
 	UserName string
 	Password string
+}
+
+type SecretsCollectonResponse struct {
+	Name []string
+}
+
+type SecretResponse struct {
+	Name            string
+	Secret          []byte
+	SecretPlainText string
 }

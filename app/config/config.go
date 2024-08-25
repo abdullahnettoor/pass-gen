@@ -7,6 +7,7 @@ import (
 type Config struct {
 	DbConnectionString string `mapstructure:"DB_CONNECTION_URI"`
 	JwtSecret          string `mapstructure:"JWT_SECRET"`
+	CipherSecret       string `mapstructure:"CIPHER_SECRET"`
 	ConfigFilePath     string `mapstructure:"CONFIG_FILE_PATH"`
 	ConfigPath         string `mapstructure:"CONFIG_PATH"`
 }

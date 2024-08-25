@@ -51,3 +51,19 @@ func Login(user *req.User) (*res.LoginResponse, error) {
 	}
 	return &res, nil
 }
+
+func StoreSecret(credential *req.Credential) error {
+	fmt.Println("credential ", credential)
+	query := fmt.Sprintf(`INSERT INTO %[1]s (user_id, key, password) 
+		SELECT $1, $2, $3 
+		WHERE NOT EXISTS (SELECT 1 FROM %[1]s WHERE user_id=$1 AND key=$2)`, passwordStoreTable)
+	result := db.Exec(query, credential.UserID, credential.Key, credential.CipherText)
+	if result.Error != nil {
+		return e.ErrDb
+	}
+
+	if result.RowsAffected == 0 {
+		return e.ErrSecretKeyRepeat
+	}
+	return nil
+}

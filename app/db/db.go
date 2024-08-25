@@ -16,7 +16,7 @@ type PassGenUser struct {
 type PassGenPasswordStore struct {
 	ID       int
 	UserID   int
-	Name     string
+	Key      string
 	Password string
 }
 
