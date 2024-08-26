@@ -15,8 +15,8 @@ type SecretsCollectonResponse struct {
 	Name []string
 }
 
-type SecretResponse struct {
-	Name            string
-	Secret          []byte
+type SecretPasswordResponse struct {
+	Key             string
+	Password        []byte
 	SecretPlainText string
 }

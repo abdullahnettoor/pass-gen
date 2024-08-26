@@ -58,7 +58,7 @@ func Signup(user *req.User) (*res.User, error) {
 	}
 
 	configDir := filepath.Join(userHomeDir, configData.ConfigPath)
-	confFileDir := filepath.Join(userHomeDir, configData.ConfigFilePath)
+	confFileDir := filepath.Join(configDir, configData.ConfigFilePath)
 
 	err = os.MkdirAll(configDir, os.ModePerm)
 	if err != nil {
@@ -144,32 +144,29 @@ func Login(user *req.User) error {
 
 	fmt.Println("File created and written successfully")
 	return nil
-	// err = os.MkdirAll(configDir, os.ModePerm)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// file, err := os.Create(confFileDir)
-	// if err != nil {
-	// 	fmt.Println("hello")
-	// 	return err
-	// }
-	// defer file.Close()
-
-	// _, err = file.Write(byteTokenModel)
-	// if err != nil {
-	// 	fmt.Println("how r u")
-	// 	return err
-	// }
-
-	// return nil
 }
 
-func StoreSecret(credential *req.Credential) (err error) {
-	credential.CipherText, err = generator.Erncypt([]byte(configData.CipherSecret), []byte(credential.Secret))
+func StoreSecretPasswords(credential *req.Credential) (err error) {
+	credential.CipherText, err = encoder.Encrypt([]byte(configData.CipherSecret), []byte(credential.Secret))
 	if err != nil {
 		return err
 	}
 
 	return repo.StoreSecret(credential)
+}
+
+func GetSecretPasswords(req *req.GetSecretPassword) (*res.SecretPasswordResponse, error) {
+	res, err := repo.FetchSecret(req)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Printf("res: %v\n", res.Password)
+
+	plainText, err := encoder.Decrypt([]byte(configData.CipherSecret), res.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	res.SecretPlainText = string(plainText)
+	return res, nil
 }

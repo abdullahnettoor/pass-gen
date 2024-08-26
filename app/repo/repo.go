@@ -67,3 +67,17 @@ func StoreSecret(credential *req.Credential) error {
 	}
 	return nil
 }
+
+func FetchSecret(req *req.GetSecretPassword) (*res.SecretPasswordResponse, error) {
+	var res res.SecretPasswordResponse
+	query := fmt.Sprintf("SELECT * FROM %s WHERE key= $1 AND user_id = $2", passwordStoreTable)
+	result := db.Raw(query, req.Key, req.UserID).Scan(&res)
+	if result.Error != nil {
+		return nil, e.ErrDb
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, e.ErrNotFound
+	}
+	return &res, nil
+}

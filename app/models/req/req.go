@@ -17,9 +17,9 @@ type Credential struct {
 	CipherText []byte
 }
 
-type GetSecret struct {
+type GetSecretPassword struct {
 	UserID string
-	Name   string
+	Key    string
 }
 
 type GetKey struct {

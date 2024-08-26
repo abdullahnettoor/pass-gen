@@ -55,7 +55,7 @@ var saveCmd = &cobra.Command{
 		}
 		fmt.Println(credential)
 
-		err = usecase.StoreSecret(&credential)
+		err = usecase.StoreSecretPasswords(&credential)
 		if err != nil {
 			log.Fatal("err ", err)
 		}

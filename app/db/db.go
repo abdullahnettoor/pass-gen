@@ -17,7 +17,8 @@ type PassGenPasswordStore struct {
 	ID       int
 	UserID   int
 	Key      string
-	Password string
+	Password []byte
+	FkUser   PassGenUser `gorm:"foreignKey:UserID;references:ID"`
 }
 
 func InitDB(dbconnection string) (*gorm.DB, error) {
