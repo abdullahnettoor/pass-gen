@@ -11,7 +11,7 @@ type LoginResponse struct {
 	Password string
 }
 
-type SecretsCollectonResponse struct {
+type SecretsCollectionResponse struct {
 	Name []string
 }
 

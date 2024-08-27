@@ -81,3 +81,17 @@ func FetchSecret(req *req.GetSecretPassword) (*res.SecretPasswordResponse, error
 	}
 	return &res, nil
 }
+
+func GetAllKeys(req req.GetKey) (*res.SecretsCollectionResponse, error) {
+	var res res.SecretsCollectionResponse
+	query := fmt.Sprintf("SELECT key FROM %s WHERE user_id= $1", passwordStoreTable)
+	result := db.Raw(query, req.UserID).Scan(&res.Name)
+	if result.Error != nil {
+		return nil, e.ErrDb
+	}
+
+	if result.RowsAffected == 0 {
+		return nil, e.ErrIsEmpty
+	}
+	return &res, nil
+}

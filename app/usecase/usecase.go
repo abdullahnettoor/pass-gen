@@ -12,7 +12,7 @@ import (
 	e "github.com/abdullahnettoor/pass-gen/app/models/errors"
 	"github.com/abdullahnettoor/pass-gen/app/models/req"
 	"github.com/abdullahnettoor/pass-gen/app/models/res"
-	"github.com/abdullahnettoor/pass-gen/app/pkg/generator"
+	encoder "github.com/abdullahnettoor/pass-gen/app/pkg/generator"
 	"github.com/abdullahnettoor/pass-gen/app/repo"
 	"github.com/abdullahnettoor/pass-gen/app/utils"
 )
@@ -169,4 +169,8 @@ func GetSecretPasswords(req *req.GetSecretPassword) (*res.SecretPasswordResponse
 
 	res.SecretPlainText = string(plainText)
 	return res, nil
+}
+
+func AllKey(req req.GetKey) (*res.SecretsCollectionResponse, error) {
+	return repo.GetAllKeys(req)
 }
