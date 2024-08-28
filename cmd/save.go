@@ -36,14 +36,14 @@ var saveCmd = &cobra.Command{
 
 		reader := bufio.NewReader(os.Stdin)
 
-		fmt.Printf("Enter key:")
+		fmt.Printf("Enter key: ")
 		credential.Key, _ = reader.ReadString('\n')
 		if credential.Key = strings.TrimSpace(credential.Key); len(credential.Key) == 0 {
 			log.Fatal("key is empty")
 		}
 
 		//read password
-		fmt.Printf("Enter password to save:")
+		fmt.Printf("Enter password to save: ")
 		password, err := term.ReadPassword(syscall.Stdin)
 		if err != nil {
 			log.Fatal(err)
@@ -51,7 +51,7 @@ var saveCmd = &cobra.Command{
 		fmt.Println("")
 
 		if credential.Secret = strings.TrimSpace(string(password)); len(credential.Secret) <= 1 {
-			log.Fatal("secret is empty")
+			log.Fatal("Password is empty")
 		}
 		fmt.Println(credential)
 
@@ -59,7 +59,7 @@ var saveCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal("err ", err)
 		}
-		fmt.Printf("%s stored succesfully ", credential.Key)
+		fmt.Printf("%s stored succesfully.", credential.Key)
 	},
 }
 

@@ -35,7 +35,7 @@ var keysCmd = &cobra.Command{
 		// fetch all keys
 		result, err := usecase.AllKey(req)
 		if errors.Is(err, e.ErrIsEmpty) {
-			fmt.Println("No Secrets are stored")
+			fmt.Println("No passwords are stored")
 			return
 		}
 
@@ -43,8 +43,9 @@ var keysCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		for _, val := range result.Name {
-			fmt.Printf("key :%s\n", val)
+		fmt.Printf("KEYS\n")
+		for _, key := range result.Keys {
+			fmt.Printf("- %s      \n", key)
 		}
 	},
 }

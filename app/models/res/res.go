@@ -12,7 +12,7 @@ type LoginResponse struct {
 }
 
 type SecretsCollectionResponse struct {
-	Name []string
+	Keys []string
 }
 
 type SecretPasswordResponse struct {

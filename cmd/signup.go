@@ -29,7 +29,7 @@ var signupCmd = &cobra.Command{
 		reader := bufio.NewReader(os.Stdin)
 
 		//read user name
-		fmt.Printf("Enter your user name :")
+		fmt.Printf("Enter your user name: ")
 		user.UserName, _ = reader.ReadString('\n')
 		if user.UserName = strings.TrimSpace(user.UserName); len(user.UserName) == 0 {
 			log.Fatal("user name is empty")
@@ -40,7 +40,7 @@ var signupCmd = &cobra.Command{
 		}
 
 		//read password
-		fmt.Printf("Enter your password :")
+		fmt.Printf("Enter your password: ")
 		password, err := term.ReadPassword(syscall.Stdin)
 		if err != nil {
 			log.Fatal(err)
@@ -52,7 +52,7 @@ var signupCmd = &cobra.Command{
 		}
 
 		//read confirm password
-		fmt.Printf("Re-enter your password :")
+		fmt.Printf("Re-enter your password: ")
 		password, err = term.ReadPassword(syscall.Stdin)
 		if err != nil {
 			log.Fatal(err)
@@ -67,7 +67,7 @@ var signupCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("signup succesfully with user id ", result)
+		fmt.Println("Signup successful. User ID:", result)
 	},
 }
 

@@ -17,8 +17,8 @@ import (
 // fetchCmd represents the fetch command
 var fetchCmd = &cobra.Command{
 	Use:   "fetch",
-	Short: "A brief description of your command",
-	Long:  `A longer description that spans multiple lines and likely contains`,
+	Short: "Retrieve passwords with key",
+	Long:  `Fetch passwords by passing key as command arguments with the flay --key`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			req req.GetSecretPassword

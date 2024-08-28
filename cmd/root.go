@@ -32,9 +32,10 @@ var rootCmd = &cobra.Command{
 	Long: `PassGen is a password generated and store.
 	Users can:
 	- Signup/Login
-	- Generate passwords
-	- Save passwords
-	- Retrieve passwords`,
+	- Save passwords with key
+	- Retrieve passwords
+	- List keys
+	`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },

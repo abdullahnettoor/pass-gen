@@ -29,18 +29,18 @@ var loginCmd = &cobra.Command{
 		reader := bufio.NewReader(os.Stdin)
 
 		//read user name
-		fmt.Printf("Enter your user name :")
+		fmt.Printf("Enter your username: ")
 		user.UserName, _ = reader.ReadString('\n')
 		if user.UserName = strings.TrimSpace(user.UserName); len(user.UserName) == 0 {
 			log.Fatal("user name is empty")
 		}
 
-		if user.UserName = strings.TrimSpace(string(user.UserName)); len(user.UserName) < 4 {
+		if user.UserName = strings.TrimSpace(user.UserName); len(user.UserName) < 4 {
 			log.Fatal("username should not be lesser that 4 charachters")
 		}
 
 		//read password
-		fmt.Printf("Enter your password :")
+		fmt.Printf("Enter your password: ")
 		password, err := term.ReadPassword(syscall.Stdin)
 		if err != nil {
 			log.Fatal(err)
@@ -48,7 +48,7 @@ var loginCmd = &cobra.Command{
 		fmt.Println("")
 
 		if user.Password = strings.TrimSpace(string(password)); len(user.Password) <= 4 {
-			log.Fatal("password is less than five digit kidly strong your the password")
+			log.Fatal("Password must be more than 4 characters")
 		}
 
 		err = usecase.Login(&user)
